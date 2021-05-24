@@ -21,7 +21,6 @@ tickers = [stock['Ticker'] for stock in stock_list]
 for a,b,c,d,e in zip(tickers[::5],tickers[1::5],tickers[2::5],tickers[3::5],tickers[4::5]):
     print('{:<20}{:<20}{:<20}{:<20}{:<}'.format(a,b,c,d,e))
 
-
 # RSI
 stock_list_by_rsi = sorted(stock_list.data, key=lambda x: float(x['RSI']))
 stock_list_by_rsi_rev = sorted(stock_list.data, key=lambda x: float(x['RSI']), reverse=True)
@@ -29,7 +28,7 @@ stock_list_by_rsi_rev = sorted(stock_list.data, key=lambda x: float(x['RSI']), r
 rsi_lists = {
     'values': {
         'under' : ['50', '45', '40', '35'],
-        'above' : ['70', '60']
+        'above' : ['70', '60', '50']
     },
     'data': {
         'under' : dict(),
