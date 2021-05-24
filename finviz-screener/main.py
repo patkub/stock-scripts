@@ -37,7 +37,7 @@ rsi_lists = {
 }
 
 for rsi in rsi_lists['values']['under']:
-    rsi_lists['data']['under'][rsi] = list(filter(lambda x : float(x['RSI']) < float(rsi), stock_list_by_rsi))
+    rsi_lists['data']['under'][rsi] = list(filter(lambda x : float(x['RSI']) <= float(rsi), stock_list_by_rsi))
 
 for rsi in rsi_lists['values']['above']:
     rsi_lists['data']['above'][rsi] = list(filter(lambda x : float(x['RSI']) > float(rsi), stock_list_by_rsi))
