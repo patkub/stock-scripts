@@ -30,6 +30,7 @@ def print_stock(stock):
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('-f', '--filters', type=str, help='FinViz screener filters', default="exch_any cap_mega")
+parser.add_argument('-rt', '--rsi-tables', action='store_true', help='Show RSI tables')
 args = parser.parse_args()
 
 #https://finviz.com/screener.ashx?v=121&f=cap_mega&o=-marketcap
@@ -50,7 +51,6 @@ for a,b,c,d,e in zip(tickers[::5],tickers[1::5],tickers[2::5],tickers[3::5],tick
 
 # RSI
 stock_list_by_rsi = sorted(stock_list.data, key=get_rsi)
-stock_list_by_rsi_rev = sorted(stock_list.data, key=get_rsi, reverse=True)
 
 rsi_lists = {
     'values': {
@@ -69,20 +69,22 @@ for rsi in rsi_lists['values']['under']:
 for rsi in rsi_lists['values']['above']:
     rsi_lists['data']['above'][rsi] = list(filter(lambda x : filter_rsi_over(rsi, x), stock_list_by_rsi))
 
-rsi_list_types = ['under', 'above']
-for type in rsi_list_types:
-    for rsi in rsi_lists['values'][type]:
-        print("\nRSI {type} {rsi}:\n".format(type = type, rsi = rsi))
-        for stock in rsi_lists['data'][type][rsi]:
-            print_stock(stock)
+# Show RSI tables
+if args.rsi_tables:
+    rsi_list_types = ['under', 'above']
+    for type in rsi_list_types:
+        for rsi in rsi_lists['values'][type]:
+            print("\nRSI {type} {rsi}:\n".format(type = type, rsi = rsi))
+            for stock in rsi_lists['data'][type][rsi]:
+                print_stock(stock)
 
 
-# consider buying/selling
+# Consider buying/selling
 tickers_rsi_under_45 = [stock['Ticker'] for stock in rsi_lists['data']['under']['45']]
 tickers_rsi_above_60 = [stock['Ticker'] for stock in rsi_lists['data']['above']['60']]
 
 print("\nConsider buying (RSI under 45): {}".format(", ".join(tickers_rsi_under_45)))
 print("\nConsider selling (RSI above 60): {}".format(", ".join(tickers_rsi_above_60)))
 
-# blank line at end
+# Blank line at end
 print()
