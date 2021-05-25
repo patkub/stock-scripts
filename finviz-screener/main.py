@@ -1,4 +1,3 @@
-from operator import itemgetter
 from finviz.screener import Screener
 
 
