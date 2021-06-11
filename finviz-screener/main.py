@@ -43,15 +43,15 @@ parser.add_argument(
     "--filters",
     type=str,
     help="FinViz screener filters",
-    default="exch_any cap_mega",
+    # Shows US companies which are megacaps ($200 bln or more marketcap)
+    default="exch_any geo_usa cap_mega",
 )
 parser.add_argument("-rt", "--rsi-tables", action="store_true", help="Show RSI tables")
 args = parser.parse_args()
 
 # https://finviz.com/screener.ashx?v=121&f=cap_mega&o=-marketcap
 
-# Shows companies which are megacaps ($200 bln or more marketcap)
-# filters = ['exch_any', 'cap_mega']
+# split filters by space
 filters = args.filters.split()
 
 # Get the technical table and sort it by marketcap descending
